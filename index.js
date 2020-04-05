@@ -9,7 +9,7 @@
 // console.log("adfsadads");
 //
 // //Socket Logic
-// const socketio = require('socket.io')(http);
+// const socketio = require('services.io')(http);
 // console.log("adfsadads");
 //
 // socketio.on("connection", (userSocket) => {
@@ -26,20 +26,21 @@ var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 
+
+let users = [];
+
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
 
-io.on('connection', function(socket){
-    console.log("asaa");
-    socket.on("send_message", (data) => {
-        console.log(data);
-        socket.emit("receive_message", data)
-    })
-});
+require('./services/socket')(io);
 
-http.listen(process.env.PORT, function(){
-    console.log('listening on *:3000');
+
+
+
+
+http.listen(process.env.PORT || 5000, function(){
+    console.log('listening on *:5000');
 });
 
 
